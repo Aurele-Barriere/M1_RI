@@ -54,44 +54,44 @@
 	
 	\subsection{Question 2}
 	
-	\tikzstyle{lien}=[->,>=stealth,rounded corners=5pt,thick]
+	\tikzstyle{lien}=[->,>=stealth,rounded corners=2pt,thick]
 	\tikzset{individu/.style={draw,thick,fill=#1!25},
 		individu/.default={white}}
 	
 	\begin{figure}[h!]
 		\centering
 		\begin{tikzpicture}
-		\node [individu=white] {($+$ $\mathit{exp}$ $\mathit{sexp}$)} [sibling 
+		\node [lien,individu=white] {($+$ $\mathit{exp}$ $\mathit{sexp}$)} [sibling 
 		distance=4cm,level distance=1.5cm]
 		child { 
-			node [individu=blue]{$1$} [sibling distance=3cm]
+			node [lien,individu=blue]{$1$} [sibling distance=3cm]
 		}
 		child { 
-			node [individu=white]{$\mathit{exp}$ $\mathit{sexp}$} [sibling 
+			node [lien,individu=white]{$\mathit{exp}$ $\mathit{sexp}$} [sibling 
 			distance=4cm]
 			child { 
-				node [individu=white]{($*$ $\mathit{exp}$ $\mathit{sexp}$)} [sibling 
+				node [lien,individu=white]{($*$ $\mathit{exp}$ $\mathit{sexp}$)} [sibling 
 				distance=2cm]
 				child { 
-					node [individu=blue]{$2$} 
+					node [lien,individu=blue]{$2$} 
 				}
 				child { 
-					node [individu=white]{$\mathit{exp}$} 
+					node [lien,individu=white]{$\mathit{exp}$} 
 					child { 
-						node [individu=blue]{$3$} 
+						node [lien,individu=blue]{$3$} 
 					}
 				}
 			}
 			child { 
-				node [individu=white]{$\mathit{exp}$ $\mathit{sexp}$} [sibling 
+				node [lien,individu=white]{$\mathit{exp}$ $\mathit{sexp}$} [sibling 
 				distance=2cm]
 				child { 
-					node [individu=blue]{$4$} 
+					node [lien,individu=blue]{$4$} 
 				}
 				child { 
-					node [individu=white]{$\mathit{exp}$} 
+					node [lien,individu=white]{$\mathit{exp}$} 
 					child { 
-						node [individu=blue]{$3$} 
+						node [lien,individu=blue]{$3$} 
 					}
 				}
 			}
