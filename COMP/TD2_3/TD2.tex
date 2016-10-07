@@ -1,0 +1,150 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+
+\usepackage{authblk}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+%\usepackage{amsmath}
+\usepackage[cmex10]{amsmath}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{float}
+\usepackage{url} \urlstyle{sf}
+
+\usepackage{dashrule}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+\usepackage{color}
+\usepackage{subcaption}
+\newcommand{\alert}[1]{\color{red}{#1}}
+\newcommand{\greyout}[1]{\color{gray}{#1}}
+
+\title{TD2 et 3 COMP}
+\author{}
+
+\begin{document}
+	\maketitle
+	
+\section{Exercice 1}
+	
+\subsection{Question 1}
+	
+	On ajoute un attribut synthétisé entier \textit{val} qui représente la valeur 
+	de l'expression. L'attribut \textit{val} de la racine de l'arbre correspond à 
+	la valeur de l'expression.
+	
+	On définit ainsi le calcul de \textit{val} :
+	\begin{center}
+		\begin{tabular}{l | r}
+			$\mathit{chiffre} \rightarrow c $&$ \mathit{chiffre.val} = c $\\
+			$\mathit{exp} \rightarrow \mathit{chiffre} $&$ \mathit{exp.val} = 
+			\mathit{chiffre.val}$ \\
+			$\mathit{exp}_1 \rightarrow (+ \mathit{exp}_2 \mathit{exp}_3) $&$ 
+			\mathit{exp}_1\mathit{.val} =	\mathit{exp}_2\mathit{.val} + 
+			\mathit{exp}_3\mathit{.val}$ \\
+			$\mathit{exp}_1 \rightarrow (* \mathit{exp}_2 \mathit{exp}_3) $&$ 
+			\mathit{exp}_1\mathit{.val} =	\mathit{exp}_2\mathit{.val} \times 
+			\mathit{exp}_3\mathit{.val}$
+		\end{tabular}
+	\end{center}
+	
+	\subsection{Question 2}
+	
+	\tikzstyle{lien}=[->,>=stealth,rounded corners=5pt,thick]
+	\tikzset{individu/.style={draw,thick,fill=#1!25},
+		individu/.default={white}}
+	
+	\begin{figure}[h!]
+		\centering
+		\begin{tikzpicture}
+		\node [individu=white] {($+$ $\mathit{exp}$ $\mathit{sexp}$)} [sibling 
+		distance=4cm,level distance=1.5cm]
+		child { 
+			node [individu=blue]{$1$} [sibling distance=3cm]
+		}
+		child { 
+			node [individu=white]{$\mathit{exp}$ $\mathit{sexp}$} [sibling 
+			distance=4cm]
+			child { 
+				node [individu=white]{($*$ $\mathit{exp}$ $\mathit{sexp}$)} [sibling 
+				distance=2cm]
+				child { 
+					node [individu=blue]{$2$} 
+				}
+				child { 
+					node [individu=white]{$\mathit{exp}$} 
+					child { 
+						node [individu=blue]{$3$} 
+					}
+				}
+			}
+			child { 
+				node [individu=white]{$\mathit{exp}$ $\mathit{sexp}$} [sibling 
+				distance=2cm]
+				child { 
+					node [individu=blue]{$4$} 
+				}
+				child { 
+					node [individu=white]{$\mathit{exp}$} 
+					child { 
+						node [individu=blue]{$3$} 
+					}
+				}
+			}
+		};
+		\end{tikzpicture}
+		\caption{Arbre de dérivation de l'expression $(+1(*23)43)$}
+		\label{fig:ast}
+	\end{figure}
+	
+\subsection{Question 3}
+
+Pour calculer l'attribut \textit{val} d'une règle \textit{sexp}, on a besoin de 
+connaître l'opérateur concerné.
+
+Pour ce faire, on ajoute un attribut hérité \textit{op} qui correspond à un 
+opérateur : $+$ ou $*$.
+
+On étend le calcul de \textit{val} :
+\begin{center}
+	\begin{tabular}{l | r}
+		$\mathit{sexp} \rightarrow \mathit{exp}$ & $\mathit{sexp.val} = 
+		\mathit{exp.val}$\\
+		\end{tabular}
+\end{center}
+
+Et on définit ainsi le calcul de \textit{op} :
+\begin{center}
+	\begin{tabular}{l | r}
+		$\mathit{exp}_1 \rightarrow (+ \mathit{exp}_2\quad \mathit{sexp}) $&$ 
+		\mathit{sexp.op}= + $\\
+		$\mathit{exp}_1 \rightarrow (*\mathit{exp}_2\quad \mathit{sexp}) $&$ 
+		\mathit{sexp.op}= * $\\
+		$\mathit{sexp}_1 \rightarrow \mathit{exp}\quad\mathit{sexp}_2$ & 
+		$\mathit{sexp_1.val} = \mathit{sexp_1.op}(\mathit{exp.val}, 
+		\mathit{sexp_2.val})$\\
+	\end{tabular}
+\end{center}
+
+Alors dans un premier temps, on propage les opérateurs (en descendant dans 
+l'arbre syntaxique). Puis, en remontant dans l'arbre syntaxique, on calcule la 
+valeur de l'expression.
+
+\subsection{Question 3 en une seule vague}
+On peut n'utiliser que des attributs synthétisés. On définirait alors un
+attribut synthétisé $\mathit{val\_list}$, qui contiendrait la liste des valeurs
+des arguments d'une règle $\mathit{sexp}$. Alors, au moment d'évaluer une
+expression $\mathit{exp}_1 \rightarrow (op\quad \mathit{exp}_2\quad
+\mathit{sexp}) $, on implémente le calcul sous la forme d'une fonction
+$\mathit{fold}$ qui appliquerait l'opérateur sur tous les éléments de la liste.
+
+
+\section{Exercice 3}
+    
+
+
+\end{document}
