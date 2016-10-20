@@ -1,0 +1,105 @@
+\documentclass[a4paper,french,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{fullpage}
+
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{red}{rgb}{1,0,0.1}
+\definecolor{purple}{rgb}{1,0,0.4}
+\definecolor{silver}{rgb}{0.7,0.7,0.7}
+\definecolor{green}{rgb}{0,0.6,0}
+
+
+\lstset{language=C++,
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green},
+  commentstyle=\itshape\color{silver},
+  identifierstyle=\color{black},
+  stringstyle=\color{red},
+  frame=l
+}
+
+
+
+\title{TD5 SGP : Programmation des entrée/sorties caractère}
+
+\begin{document}
+
+\maketitle
+
+\paragraph{Question 2}
+
+\begin{lstlisting}
+void tty_init(void) {
+    initialiser();
+    autoriser_it_e();
+    autoriser_it_s();
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+semahpore buff_s = 1
+int i, int lg;
+char* buffer_s;
+
+
+void tty_em_ligne(char* l) {
+    P(buff_s);
+    autoriser_it_s();
+    lg = longueur(l); // avec le '0'
+    buffer_s = copy(l);
+    i = 1;
+    ecrire(l[0]);
+}
+
+it_s {
+    if (i < lg) {
+        ecrire(buffer_s[i])
+        i++;
+    }
+    else {
+        interdire_it_s();
+        V(buffer_s);
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+semaphore read = 0;
+int i = 0;
+
+
+void tty_rec_ligne(int *lg, char* l) {
+    P(read);
+    l = copy(buffer);
+    autoriser_it_e();
+}
+
+it_e {
+    lire(e);
+    if (c != '\0') {
+        buffer[i] = c;
+        c++;
+    }
+    else {
+        buffer[i] = '\0';
+        interdire_it_e();
+        V(read);
+        i = 0;
+    }
+}
+\end{lstlisting}
+
+
+\end{document}
